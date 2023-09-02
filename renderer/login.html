@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Login Form </title>
+    <link rel="stylesheet" href="css/login.css">               
+    <!-- Boxicons CSS -->
+    <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">                       
+  </head>
+<body>
+<section class="container forms">
+     <div class="form login">
+     <div class="form-content">
+     <h1>Login</h1>
+     <div id="login-error-msg-holder">
+      <p id="login-error-msg" class="error-msg-second-line">Invalid username or password</p>
+    </div>
+     <form id="login-form">
+     <div class="field input-field">
+     <label for="email">&nbsp;<i class="fa fa-user" style="font-size:20px;"></i> Username</label>
+     <input type="text" placeholder="email" class="input" id="email" required>
+     </div>
+     <div class="field input-field">
+     <label for="password">&nbsp;<i class="fa fa-key" style="font-size:20px;"></i> Password</label>
+     <input type="password" placeholder="Password" class="password" id="password" required>
+     <i class='bx bx-hide eye-icon'></i>
+     </div>
+     <center>
+     <div class="field button-field">
+     <button type="submit" id="loginButton">Login</button>
+     </div>
+     </center>
+     <div class="form-link">
+     <hr>
+     <br>
+     <p>Don't have an account? <a class="link signup-link">Signup</a></p>
+   </div>
+  </div>
+ </form>
+</div>
+<!-- Signup Form -->
+<div class="form signup">
+     <div class="form-content">
+     <h1>Signup</h1>
+     <form id="loginForm">
+     <div class="field input-field">
+     <label for="email">&nbsp;<i class="fa fa-user" style="font-size:20px;"></i> Username</label>
+     <input type="text" placeholder="Username" class="input" id="email" required>
+     </div>
+     <div class="field input-field">
+     <label for="password">&nbsp;<i class="fa fa-key" style="font-size:20px;"></i> Password</label>
+     <input type="password" placeholder="Create password" class="password" id="password" required>
+     <i class='bx bx-hide eye-icon'></i>
+     </div>
+     <center>
+     <div class="field button-field">
+      <button type="submit" id="signupButton">Signup</button>
+     </div>
+     </center>
+     </form>
+     <div class="form-link">
+     <hr>
+     <br>
+     <p>Already have an account? <a class="link login-link">Login</a></p>
+ </div>
+</section>
+</body>
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.3.1/firebase-app.js";
+  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.3.1/firebase-auth.js";
+  import { getDatabase,set,ref } from "https://www.gstatic.com/firebasejs/10.3.1/firebase-database.js";
+
+
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyCHXMsl2E5RxsjCd0MVbrB6y1sm6Pbq1kM",
+    authDomain: "login-signup-form-dd8bc.firebaseapp.com",
+    projectId: "login-signup-form-dd8bc",
+    storageBucket: "login-signup-form-dd8bc.appspot.com",
+    messagingSenderId: "64764875506",
+    appId: "1:64764875506:web:3eb18caf394a093139b66b"
+  };
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth();
+  const database = getDatabase(app);
+
+  // sign in user
+  signupButton.addEventListener('click', (e) => {
+    var email = document.getElementById('email').value;
+    var password = document.getElementById('password').value;
+    
+    createUserWithEmailAndPassword(auth, email, password)
+  .then((userCredential) => {
+    const user = userCredential.user;
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // .. user.uid
+    set(ref(database, 'users/' + user.uid), {
+    email: email,
+    password: password
+  })
+  .then(() => {
+  // Data saved successfully!
+})
+.catch((error) => {
+  // The write failed...
+    });
+  });
+});
+// login user
+signInWithEmailAndPassword(auth, email, password)
+  .then((userCredential) => {
+    // Signed in 
+    const user = userCredential.user;
+    // ...
+    set(ref(database, 'users/' + user.uid), {
+    email: email,
+    password: password
+  })
+  .then(() => {
+  // Data saved successfully!
+})
+.catch((error) => {
+  // The write failed...
+  });
+})
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+  });
+
+    const forms = document.querySelector(".forms"),
+    pwShowHide = document.querySelectorAll(".eye-icon"),
+    links = document.querySelectorAll(".link");
+    pwShowHide.forEach(eyeIcon => {
+    eyeIcon.addEventListener("click", () => {
+    let pwFields = eyeIcon.parentElement.parentElement.querySelectorAll(".password");
+    pwFields.forEach(password => {
+    if(password.type === "password"){
+    password.type = "text";
+    eyeIcon.classList.replace("bx-hide", "bx-show");
+    return;
+   }
+    password.type = "password";
+    eyeIcon.classList.replace("bx-show", "bx-hide");
+    })     
+  })
+})      
+   links.forEach(link => {
+   link.addEventListener("click", e => {
+   e.preventDefault(); //preventing form submit
+   forms.classList.toggle("show-signup");
+  })
+})
+</script>
+</html>

@@ -1,0 +1,150 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+.container{
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #90EE90;
+    column-gap: 30px;
+}
+.form{
+    position: absolute;
+    max-width: 350px;
+    width: 70%;
+    padding: 30px;
+    border-radius: 6px;
+    background: rgba(1, 100, 110, 0.5);
+}
+.form.signup{
+    opacity: 0;
+    pointer-events: none;
+}
+.forms.show-signup .form.signup{
+    opacity: 1;
+    pointer-events: auto;
+}
+.forms.show-signup .form.login{
+    opacity: 0;
+    pointer-events: none;
+}
+h1{
+    font-size: 28px;
+    
+    color: #fff;
+    text-align: center;
+    cursor: default;
+}
+form{
+    margin-top: 30px;
+}
+.form .field{
+    position: relative;
+    height: 50px;
+    width: 100%;
+    margin-top: 35px;
+    border-radius: 6px;
+}
+
+.field input{
+    height: 85%;
+    width: 90%;
+    border: none;
+    font-size: 16px;
+    font-weight: 400;
+    border-radius: 6px;
+}
+.field button{
+    margin: 10px;
+    height: 80%;
+    width: 70%;
+    border: none;
+    font-size: 16px;
+    font-weight: 400;
+    border-radius: 6px;
+}
+.field input{
+    outline: none;
+    padding: 0 15px;
+    border: 1px solid#CACACA;
+}
+.field input:focus{
+    border-bottom-width: 2px;
+}
+.eye-icon{
+    position: absolute;
+    top: 91%;
+    right: 32px;
+    transform: translateY(-50%);
+    font-size: 20px;
+    color: #070505;
+    cursor: pointer;
+    padding: 5px;
+}
+.field button{
+    color: #fff;
+    background-color: #0171d3;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+.field button:hover{
+    background-color: #36109f;
+}
+.form-link{
+    text-align: center;
+    margin-top: 10px;
+    margin: 4%;
+}
+.form-link p {
+    cursor: default;
+    font-size: 15px;
+    font-weight: 400;
+    color: #fff;
+}
+.form-link a{
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 400;
+    color: #fff;
+}
+.form a{
+    color: #ee0808;
+    text-decoration: none;
+}
+.form-content a:hover{
+    text-decoration: none;
+}
+
+@media screen and (max-width: 400px) {
+    .form{
+        padding: 20px 10px;
+    }
+    
+}
+#login-error-msg-holder {
+    width: 100%;
+    
+    cursor: default;
+  }
+  
+  #login-error-msg {
+    width: 100%;
+    text-align: center;
+    
+    
+    color: #8a0000;
+    
+    
+    opacity: 0;
+  }
+  
+  .error-msg-second-line {
+    display: block;
+  }
